@@ -1,0 +1,7 @@
+dist/
+build/
+lib/
+
+# Temporary fix, since updated by release pipeline
+CHANGELOG.md
+package.json

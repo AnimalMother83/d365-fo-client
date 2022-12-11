@@ -1,0 +1,83 @@
+{
+  "name": "@an1mal/d365-fo-client",
+  "version": "0.1.0",
+  "description": "D365 Finance & Operations client",
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "prepack": "pinst --disable && npm run build",
+    "postpack": "pinst --enable",
+    "test": "vitest --watch false",
+    "test:ui": "vitest --watch true --ui",
+    "test:watch": "vitest --watch true",
+    "lint": "prettier --ignore-path .prettierignore --check . && eslint --ignore-path .prettierignore .",
+    "format": "prettier --ignore-path .prettierignore --write .",
+    "prepare": "husky install && chmod ug+x .husky/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/AnimalMother83/d365-fo-client.git"
+  },
+  "keywords": [
+    "azure",
+    "easy auth"
+  ],
+  "author": "Mikael P",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AnimalMother83/d365-fo-client/issues"
+  },
+  "homepage": "https://github.com/AnimalMother83/d365-fo-client#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@vitest/ui": "^0.25.3",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "git-commit-msg-linter": "^4.4.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.4",
+    "pinst": "^3.0.0",
+    "prettier": "^2.8.0",
+    "typescript": "^4.9.3",
+    "vitest": "^0.25.3",
+    "vitest-fetch-mock": "^0.2.1"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write --ignore-unknown"
+    ],
+    "*.{js,ts,json}": [
+      "eslint --fix"
+    ]
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/esm/types/index.d.ts",
+        "default": "./lib/esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/cjs/types/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
+  },
+  "types": "./lib/cjs/types/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "files": [
+    "lib/**/*"
+  ]
+}
